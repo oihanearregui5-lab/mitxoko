@@ -1,0 +1,106 @@
+═══════════════════════════════════════════════════════════
+  PASO A PASO PARA QUE LA WEB SE ACTUALICE
+═══════════════════════════════════════════════════════════
+
+Hola Oihane. Tu repo tiene archivos viejos mezclados con los
+nuevos. Hay que borrarlos antes de subir este ZIP, si no el
+build seguirá fallando.
+
+Te dejo los enlaces directos. Solo tienes que abrir cada uno
+en el navegador y darle al botón de borrar.
+
+
+═══════════════════════════════════════════════════════════
+PARTE 1 — BORRAR 9 COSAS DEL REPO DE GITHUB
+═══════════════════════════════════════════════════════════
+
+ABRE CADA ENLACE Y BÓRRALO (papelera 🗑️ o ⋯ → Delete):
+
+──────────────────────────────────────────────────────────
+ARCHIVO MÁS IMPORTANTE (el que está rompiendo el build):
+
+  ▸ plantillas.$slug.tsx
+    https://github.com/oihanearregui5-lab/mitxoko/blob/main/src/routes/plantillas.%24slug.tsx
+
+──────────────────────────────────────────────────────────
+ARCHIVOS BASURA EN LA RAÍZ:
+
+  ▸ download
+    https://github.com/oihanearregui5-lab/mitxoko/blob/main/download
+
+  ▸ download (1)
+    https://github.com/oihanearregui5-lab/mitxoko/blob/main/download%20(1)
+
+  ▸ download (2)
+    https://github.com/oihanearregui5-lab/mitxoko/blob/main/download%20(2)
+
+──────────────────────────────────────────────────────────
+CARPETAS ENTERAS (entra dentro de cada una → ⋯ → "Delete directory"):
+
+  ▸ Carpeta .lovable
+    https://github.com/oihanearregui5-lab/mitxoko/tree/main/.lovable
+
+  ▸ Carpeta src/components/layout
+    https://github.com/oihanearregui5-lab/mitxoko/tree/main/src/components/layout
+
+  ▸ Carpeta src/components/site
+    https://github.com/oihanearregui5-lab/mitxoko/tree/main/src/components/site
+
+  ▸ Carpeta src/i18n
+    https://github.com/oihanearregui5-lab/mitxoko/tree/main/src/i18n
+
+──────────────────────────────────────────────────────────
+UN ARCHIVO MÁS DE LIMPIEZA:
+
+  ▸ proyectos.tsx (la sección ya no se usa)
+    https://github.com/oihanearregui5-lab/mitxoko/blob/main/src/routes/proyectos.tsx
+
+
+PARA CADA UNO:
+  1. Abre el enlace
+  2. Click en  🗑️  (papelera) si es archivo
+     o  ⋯  →  "Delete directory" si es carpeta
+  3. Mensaje commit: déjalo como viene
+  4. Click verde "Commit changes"
+
+
+═══════════════════════════════════════════════════════════
+PARTE 2 — SUBIR ESTE ZIP A GITHUB
+═══════════════════════════════════════════════════════════
+
+Una vez borrados los 9 elementos:
+
+  1. Ve a https://github.com/oihanearregui5-lab/mitxoko
+  2. Click en "Add file" → "Upload files"
+  3. Descomprime este ZIP en tu ordenador
+  4. Entra dentro de la carpeta "mitxoko"
+  5. Selecciona TODO (Ctrl+A) y arrastra al navegador
+  6. Espera ~30 segundos
+  7. Mensaje commit: "version limpia final"
+  8. Click "Commit changes"
+
+
+═══════════════════════════════════════════════════════════
+PARTE 3 — COMPROBAR
+═══════════════════════════════════════════════════════════
+
+  1. Espera 2 minutos
+  2. Abre mitxoko.com en INCÓGNITO
+  3. Si ves el diseño nuevo pulido → ¡VICTORIA!
+  4. Si ves algo raro → cuéntame y miramos
+
+
+═══════════════════════════════════════════════════════════
+ATAJO POR SI TIENES PRISA
+═══════════════════════════════════════════════════════════
+
+Si solo quieres que el build funcione YA y no te importa que
+queden archivos basura sueltos en el repo, basta con que
+borres SOLO el primero de la lista:
+
+  ▸ plantillas.$slug.tsx
+  
+Con borrar ese, el build pasará. El resto es limpieza estética
+del repo que puedes hacer otro día con tranquilidad.
+
+═══════════════════════════════════════════════════════════
