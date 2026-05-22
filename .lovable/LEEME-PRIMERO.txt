@@ -1,0 +1,81 @@
+═══════════════════════════════════════════════════════════
+  LEEME PRIMERO — mitxoko · cómo subir esto a GitHub
+═══════════════════════════════════════════════════════════
+
+Hola Oihane. Antes de subir el contenido nuevo, hay que borrar
+los archivos viejos que están sobrando en tu repo de GitHub.
+
+Si no los borras, el build de Cloudflare seguirá fallando.
+
+───────────────────────────────────────────────────────────
+PARTE 1 — BORRAR ARCHIVOS Y CARPETAS VIEJAS EN GITHUB
+───────────────────────────────────────────────────────────
+
+Ve a: https://github.com/oihanearregui5-lab/mitxoko
+
+Borra estos elementos, uno por uno, desde la web de GitHub:
+
+  ▸ CARPETAS COMPLETAS (cada una se borra de un click):
+      1. La carpeta  .lovable
+      2. La carpeta  src/components/layout
+      3. La carpeta  src/components/site
+      4. La carpeta  src/i18n
+
+  ▸ ARCHIVOS SUELTOS:
+      5. download           (en la raíz del repo)
+      6. download (1)       (en la raíz)
+      7. download (2)       (en la raíz)
+      8. src/routes/plantillas.$slug.tsx      ← ESTE ES EL QUE ESTÁ ROMPIENDO TODO
+      9. src/routes/proyectos.tsx
+
+───────────────────────────────────────────────────────────
+CÓMO BORRAR UNA CARPETA EN GITHUB (paso a paso)
+───────────────────────────────────────────────────────────
+
+  1. Haz click en la carpeta para entrar dentro
+  2. Arriba a la derecha verás un botón con tres puntos  ⋯
+  3. Click en  ⋯  →  "Delete directory"
+  4. Te pedirá un mensaje de commit (puedes dejar el que viene)
+  5. Click en "Commit changes" (verde, abajo)
+
+CÓMO BORRAR UN ARCHIVO EN GITHUB (paso a paso)
+
+  1. Haz click en el nombre del archivo para abrirlo
+  2. Arriba a la derecha verás el icono de papelera  🗑️
+     (o tres puntos  ⋯  →  "Delete file")
+  3. Click  →  "Commit changes"
+
+───────────────────────────────────────────────────────────
+PARTE 2 — SUBIR EL CONTENIDO NUEVO (ESTE ZIP)
+───────────────────────────────────────────────────────────
+
+Una vez borrados los 9 elementos de arriba:
+
+  1. En la página principal del repo (botón "Code" arriba)
+  2. Click en  "Add file"  →  "Upload files"
+  3. Abre la carpeta "mitxoko" de este ZIP en tu ordenador
+  4. SELECCIONA TODO LO DE DENTRO  (Ctrl+A en Windows)
+  5. Arrastra todo al navegador
+  6. Espera a que cargue (puede tardar 30 segundos, son ~90 archivos)
+  7. Mensaje de commit: "feat: pulido editorial + limpieza"
+  8. Click en "Commit changes"
+
+───────────────────────────────────────────────────────────
+PARTE 3 — COMPROBAR QUE FUNCIONA
+───────────────────────────────────────────────────────────
+
+  1. Espera 1-2 minutos
+  2. Ve a Cloudflare → Workers & Pages → mitxoko → Deployments
+  3. Verás un build nuevo en curso
+  4. Si sale  ✅ Success  →  abre mitxoko.com y disfruta
+  5. Si sale  ❌ Failed   →  copia el log y mándamelo
+
+───────────────────────────────────────────────────────────
+SI TE PIERDES
+───────────────────────────────────────────────────────────
+
+Vuelve al chat y mándame una captura de lo que ves.
+Lo más importante es BORRAR plantillas.$slug.tsx  →  el resto
+son limpieza pero ese es el que está rompiendo el deploy.
+
+¡Mucha suerte!
