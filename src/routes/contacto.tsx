@@ -1,175 +1,156 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
+import { PageTransition } from "@/components/PageTransition";
 import { useState } from "react";
 import { z } from "zod";
-import { MessageCircle, Mail, MapPin } from "lucide-react";
-import { SiteLayout } from "@/components/layout/SiteLayout";
-import { Reveal } from "@/components/site/Reveal";
+
+const searchSchema = z.object({
+  sector: z.string().optional(),
+});
 
 export const Route = createFileRoute("/contacto")({
+  component: Contacto,
+  validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "Contacto — mitxoko · Diseño web en Pamplona" },
-      { name: "description", content: "Cuéntame de tu negocio. Te respondo en menos de 24 horas. Hablar es gratis." },
-      { property: "og:title", content: "Contacto — mitxoko" },
-      { property: "og:url", content: "/contacto" },
+      { title: "Contacto — mitxoko." },
+      { name: "description", content: "Cuéntame de tu negocio. Te respondo el mismo día." },
+      { property: "og:title", content: "Contacto — mitxoko." },
+      { property: "og:description", content: "Cuéntame de tu negocio. Te respondo el mismo día." },
     ],
-    links: [{ rel: "canonical", href: "/contacto" }],
   }),
-  component: ContactPage,
 });
 
-const schema = z.object({
-  name: z.string().trim().min(2, "Nombre demasiado corto").max(80),
-  business: z.string().trim().min(1, "Indica tu negocio").max(120),
-  sector: z.string().min(1, "Elige un sector"),
-  phone: z.string().trim().min(6, "Teléfono no válido").max(30),
-  email: z.string().trim().email("Email no válido").max(120),
-  message: z.string().trim().min(10, "Cuéntame un poco más").max(1500),
-});
-
-const sectors = [
-  "Peluquería", "Bar", "Cafetería", "Restaurante", "Fisioterapia",
-  "Clínica estética", "Clínica dental", "Gimnasio", "Otro",
-];
-
-const miniFaq = [
-  ["¿Cuánto tardas en responder?", "24h en días laborables."],
-  ["¿Cobras la primera reunión?", "No, hablar es gratis."],
-  ["¿Solo trabajas en Pamplona?", "Pamplona, comarca y resto de Navarra. Fuera, escríbeme igual."],
-];
-
-function ContactPage() {
-  const [errors, setErrors] = useState<Record<string, string>>({});
+function Contacto() {
+  const { sector } = Route.useSearch();
   const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    business: sector ? `Tengo un negocio del sector ${sector}` : "",
+    message: "",
+  });
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const data = Object.fromEntries(fd.entries());
-    const parsed = schema.safeParse(data);
-    if (!parsed.success) {
-      const errs: Record<string, string> = {};
-      for (const issue of parsed.error.issues) errs[String(issue.path[0])] = issue.message;
-      setErrors(errs);
-      return;
-    }
-    setErrors({});
+    const body = encodeURIComponent(
+      `Nombre: ${form.name}\nEmail: ${form.email}\nNegocio: ${form.business}\n\n${form.message}`
+    );
+    window.location.href = `mailto:hola@mitxoko.com?subject=Presupuesto mitxoko&body=${body}`;
     setSent(true);
-    // TODO: conectar a Formspree / Web3Forms cuando esté configurado.
   };
 
   return (
-    <SiteLayout>
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 pt-16 lg:pt-24 pb-12">
-        <Reveal>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-6">Contacto</p>
-          <h1 className="font-display text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.02] max-w-4xl">
-            Cuéntame de tu <span className="italic text-primary">negocio</span>.
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-            Te respondo en menos de 24 horas. Hablar es gratis.
-          </p>
-        </Reveal>
-      </section>
+    <PageTransition>
+      <div className="min-h-screen">
+        <Nav />
 
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-12">
-        <div className="grid lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-20">
-          <Reveal>
-            {sent ? (
-              <div className="rounded-2xl border border-border p-12 text-center bg-secondary/50">
-                <p className="font-display text-4xl">¡Gracias!</p>
-                <p className="mt-4 text-muted-foreground">
-                  Recibí tu mensaje. Te respondo en menos de 24h en días laborables.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={onSubmit} className="space-y-6" noValidate>
-                <Field label="Nombre" name="name" error={errors.name} />
-                <Field label="Negocio" name="business" error={errors.business} />
+        <section className="grid md:grid-cols-2 min-h-[calc(100vh-72px)]">
+          {/* Form */}
+          <div className="bg-[color:var(--cream-100)] hero-glow px-6 md:px-16 py-20">
+            <div className="max-w-xl">
+              <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--granate-500)] mb-6">
+                Contacto
+              </p>
+              <h1 className="font-display text-4xl md:text-6xl leading-tight tracking-tight">
+                Cuéntame de tu <span className="italic text-[color:var(--granate-500)]">negocio</span>.
+              </h1>
+              <p className="mt-6 text-lg text-[color:var(--ink-900)]/75">
+                Te respondo el mismo día con una propuesta concreta.
+              </p>
+
+              <form onSubmit={submit} className="mt-10 space-y-5">
+                <Field label="Tu nombre" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
+                <Field label="Email" type="email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
+                <Field label="Tu negocio" value={form.business} onChange={(v) => setForm({ ...form, business: v })} placeholder="Peluquería, restaurante, cafetería..." />
                 <div>
-                  <Label>Sector</Label>
-                  <select
-                    name="sector"
-                    defaultValue=""
-                    className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-foreground transition-colors"
-                  >
-                    <option value="" disabled>Elige un sector</option>
-                    {sectors.map((s) => <option key={s} value={s}>{s}</option>)}
-                  </select>
-                  {errors.sector && <p className="mt-2 text-sm text-primary">{errors.sector}</p>}
-                </div>
-                <Field label="Teléfono o WhatsApp" name="phone" error={errors.phone} />
-                <Field label="Email" name="email" type="email" error={errors.email} />
-                <div>
-                  <Label>Cuéntame brevemente qué necesitas</Label>
+                  <label className="block text-xs uppercase tracking-widest text-[color:var(--ink-900)]/60 mb-2">
+                    Cuéntame algo más
+                  </label>
                   <textarea
-                    name="message"
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
                     rows={5}
-                    className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-foreground transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-[color:var(--cream-200)] border border-[color:var(--granate-500)]/15 rounded-lg focus:outline-none focus:border-[color:var(--granate-500)] transition-colors"
+                    placeholder="Qué haces, qué tienes ahora, qué te gustaría..."
                   />
-                  {errors.message && <p className="mt-2 text-sm text-primary">{errors.message}</p>}
                 </div>
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-3 rounded-full bg-foreground text-background px-7 py-3.5 text-sm transition-transform hover:-translate-y-0.5"
+                  className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--ink-900)] px-7 py-3.5 text-sm font-medium text-[color:var(--cream-100)] hover:bg-[color:var(--granate-700)] transition-colors"
                 >
-                  Enviar
+                  {sent ? "Abriendo correo..." : "Enviar mensaje"}
+                  <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </button>
               </form>
-            )}
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="lg:sticky lg:top-28 space-y-8">
-              <div>
-                <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-4">Contacto directo</p>
-                <ul className="space-y-4">
-                  <li>
-                    <a href="https://wa.me/34600000000" target="_blank" rel="noreferrer" className="flex items-center gap-3 link-underline">
-                      <MessageCircle size={18} className="text-primary" /> WhatsApp
-                    </a>
-                  </li>
-                  <li>
-                    <a href="mailto:hola@mitxoko.eus" className="flex items-center gap-3 link-underline">
-                      <Mail size={18} className="text-primary" /> hola@mitxoko.eus
-                    </a>
-                  </li>
-                  <li className="flex items-center gap-3 text-muted-foreground">
-                    <MapPin size={18} className="text-primary" /> Pamplona y zonas cercanas
-                  </li>
-                </ul>
-              </div>
-
-              <div className="border-t border-border pt-8 space-y-6">
-                {miniFaq.map(([q, a]) => (
-                  <div key={q}>
-                    <p className="font-display text-lg">{q}</p>
-                    <p className="mt-1 text-sm text-muted-foreground">{a}</p>
-                  </div>
-                ))}
-              </div>
             </div>
-          </Reveal>
-        </div>
-      </section>
-    </SiteLayout>
+          </div>
+
+          {/* Info */}
+          <div className="bg-[color:var(--forest-900)] text-[color:var(--cream-100)] px-6 md:px-16 py-20 flex flex-col justify-center">
+            <div className="max-w-md">
+              <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--coral-500)] mb-6">
+                Otros caminos
+              </p>
+              <h2 className="font-display text-3xl md:text-4xl mb-12">
+                O si prefieres, escríbeme por aquí.
+              </h2>
+
+              <ul className="space-y-8">
+                <li>
+                  <p className="text-xs uppercase tracking-widest text-[color:var(--cream-100)]/50 mb-2">Email</p>
+                  <a href="mailto:hola@mitxoko.com" className="font-display text-2xl hover:text-[color:var(--coral-500)] transition-colors">
+                    hola@mitxoko.com
+                  </a>
+                </li>
+                <li>
+                  <p className="text-xs uppercase tracking-widest text-[color:var(--cream-100)]/50 mb-2">WhatsApp</p>
+                  <a href="https://wa.me/34600000000" className="font-display text-2xl hover:text-[color:var(--coral-500)] transition-colors">
+                    +34 600 000 000
+                  </a>
+                </li>
+                <li>
+                  <p className="text-xs uppercase tracking-widest text-[color:var(--cream-100)]/50 mb-2">Estudio</p>
+                  <p className="font-display text-2xl">Pamplona · Iruñea</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <Footer />
+      </div>
+    </PageTransition>
   );
 }
 
-function Label({ children }: { children: React.ReactNode }) {
-  return <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">{children}</label>;
-}
-
-function Field({ label, name, type = "text", error }: { label: string; name: string; type?: string; error?: string }) {
+function Field({
+  label,
+  value,
+  onChange,
+  type = "text",
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  type?: string;
+  placeholder?: string;
+}) {
   return (
     <div>
-      <Label>{label}</Label>
+      <label className="block text-xs uppercase tracking-widest text-[color:var(--ink-900)]/60 mb-2">
+        {label}
+      </label>
       <input
         type={type}
-        name={name}
-        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-foreground transition-colors"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full px-4 py-3 bg-[color:var(--cream-200)] border border-[color:var(--granate-500)]/15 rounded-lg focus:outline-none focus:border-[color:var(--granate-500)] transition-colors"
+        required
       />
-      {error && <p className="mt-2 text-sm text-primary">{error}</p>}
     </div>
   );
 }

@@ -11,11 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SobreMiRouteImport } from './routes/sobre-mi'
 import { Route as ServiciosRouteImport } from './routes/servicios'
-import { Route as ProyectosRouteImport } from './routes/proyectos'
 import { Route as PlantillasRouteImport } from './routes/plantillas'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as PlantillasSlugRouteImport } from './routes/plantillas.$slug'
+import { Route as PlantillasSectorRouteImport } from './routes/plantillas.$sector'
 
 const SobreMiRoute = SobreMiRouteImport.update({
   id: '/sobre-mi',
@@ -25,11 +24,6 @@ const SobreMiRoute = SobreMiRouteImport.update({
 const ServiciosRoute = ServiciosRouteImport.update({
   id: '/servicios',
   path: '/servicios',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProyectosRoute = ProyectosRouteImport.update({
-  id: '/proyectos',
-  path: '/proyectos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlantillasRoute = PlantillasRouteImport.update({
@@ -47,9 +41,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PlantillasSlugRoute = PlantillasSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
+const PlantillasSectorRoute = PlantillasSectorRouteImport.update({
+  id: '/$sector',
+  path: '/$sector',
   getParentRoute: () => PlantillasRoute,
 } as any)
 
@@ -57,29 +51,26 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contacto': typeof ContactoRoute
   '/plantillas': typeof PlantillasRouteWithChildren
-  '/proyectos': typeof ProyectosRoute
   '/servicios': typeof ServiciosRoute
   '/sobre-mi': typeof SobreMiRoute
-  '/plantillas/$slug': typeof PlantillasSlugRoute
+  '/plantillas/$sector': typeof PlantillasSectorRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contacto': typeof ContactoRoute
   '/plantillas': typeof PlantillasRouteWithChildren
-  '/proyectos': typeof ProyectosRoute
   '/servicios': typeof ServiciosRoute
   '/sobre-mi': typeof SobreMiRoute
-  '/plantillas/$slug': typeof PlantillasSlugRoute
+  '/plantillas/$sector': typeof PlantillasSectorRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contacto': typeof ContactoRoute
   '/plantillas': typeof PlantillasRouteWithChildren
-  '/proyectos': typeof ProyectosRoute
   '/servicios': typeof ServiciosRoute
   '/sobre-mi': typeof SobreMiRoute
-  '/plantillas/$slug': typeof PlantillasSlugRoute
+  '/plantillas/$sector': typeof PlantillasSectorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,35 +78,31 @@ export interface FileRouteTypes {
     | '/'
     | '/contacto'
     | '/plantillas'
-    | '/proyectos'
     | '/servicios'
     | '/sobre-mi'
-    | '/plantillas/$slug'
+    | '/plantillas/$sector'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/contacto'
     | '/plantillas'
-    | '/proyectos'
     | '/servicios'
     | '/sobre-mi'
-    | '/plantillas/$slug'
+    | '/plantillas/$sector'
   id:
     | '__root__'
     | '/'
     | '/contacto'
     | '/plantillas'
-    | '/proyectos'
     | '/servicios'
     | '/sobre-mi'
-    | '/plantillas/$slug'
+    | '/plantillas/$sector'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactoRoute: typeof ContactoRoute
   PlantillasRoute: typeof PlantillasRouteWithChildren
-  ProyectosRoute: typeof ProyectosRoute
   ServiciosRoute: typeof ServiciosRoute
   SobreMiRoute: typeof SobreMiRoute
 }
@@ -134,13 +121,6 @@ declare module '@tanstack/react-router' {
       path: '/servicios'
       fullPath: '/servicios'
       preLoaderRoute: typeof ServiciosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/proyectos': {
-      id: '/proyectos'
-      path: '/proyectos'
-      fullPath: '/proyectos'
-      preLoaderRoute: typeof ProyectosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/plantillas': {
@@ -164,22 +144,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/plantillas/$slug': {
-      id: '/plantillas/$slug'
-      path: '/$slug'
-      fullPath: '/plantillas/$slug'
-      preLoaderRoute: typeof PlantillasSlugRouteImport
+    '/plantillas/$sector': {
+      id: '/plantillas/$sector'
+      path: '/$sector'
+      fullPath: '/plantillas/$sector'
+      preLoaderRoute: typeof PlantillasSectorRouteImport
       parentRoute: typeof PlantillasRoute
     }
   }
 }
 
 interface PlantillasRouteChildren {
-  PlantillasSlugRoute: typeof PlantillasSlugRoute
+  PlantillasSectorRoute: typeof PlantillasSectorRoute
 }
 
 const PlantillasRouteChildren: PlantillasRouteChildren = {
-  PlantillasSlugRoute: PlantillasSlugRoute,
+  PlantillasSectorRoute: PlantillasSectorRoute,
 }
 
 const PlantillasRouteWithChildren = PlantillasRoute._addFileChildren(
@@ -190,20 +170,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactoRoute: ContactoRoute,
   PlantillasRoute: PlantillasRouteWithChildren,
-  ProyectosRoute: ProyectosRoute,
   ServiciosRoute: ServiciosRoute,
   SobreMiRoute: SobreMiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

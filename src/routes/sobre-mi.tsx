@@ -1,124 +1,115 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { SiteLayout } from "@/components/layout/SiteLayout";
-import { Reveal } from "@/components/site/Reveal";
-import { FinalCta } from "@/components/site/FinalCta";
-import { motion } from "motion/react";
-import { ArrowRight } from "lucide-react";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
+import { CTA } from "@/components/CTA";
+import { PageTransition } from "@/components/PageTransition";
 
 export const Route = createFileRoute("/sobre-mi")({
+  component: SobreMi,
   head: () => ({
     meta: [
-      { title: "Sobre mitxoko — Detrás de la marca" },
-      {
-        name: "description",
-        content:
-          "Detrás de mitxoko hay una persona, no una agencia. Sin equipos comerciales, sin reuniones de tres personas. Hablas con quien te diseña la web.",
-      },
+      { title: "Sobre mitxoko — Una persona, no una agencia" },
+      { name: "description", content: "Mitxoko es una persona haciendo webs para comercios de Pamplona. Sin intermediarios, sin contratos largos, sin sorpresas." },
       { property: "og:title", content: "Sobre mitxoko" },
-      { property: "og:url", content: "/sobre-mi" },
+      { property: "og:description", content: "Una persona, no una agencia." },
     ],
-    links: [{ rel: "canonical", href: "/sobre-mi" }],
   }),
-  component: AboutPage,
 });
 
-function AboutPage() {
+function SobreMi() {
   return (
-    <SiteLayout>
-      {/* HERO */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 pt-16 lg:pt-24 pb-16">
-        <div className="grid lg:grid-cols-[1.3fr_1fr] gap-12 items-end">
-          <Reveal>
-            <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-6">
+    <PageTransition>
+      <div className="min-h-screen">
+        <Nav />
+
+        <section className="hero-glow">
+          <div className="mx-auto max-w-7xl px-6 py-24 md:py-32">
+            <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--granate-500)] mb-6">
               Sobre mitxoko
             </p>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.02]">
-              Detrás de mitxoko hay <span className="italic text-primary">una persona</span>, no una agencia.
+            <h1 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-tight tracking-tight max-w-4xl">
+              Detrás de mitxoko hay una <span className="italic text-[color:var(--granate-500)]">persona</span>, no una agencia.
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-xl">
+            <p className="mt-8 text-lg md:text-2xl text-[color:var(--ink-900)]/75 max-w-3xl">
               Sin equipos comerciales, sin reuniones de tres personas, sin departamentos. Hablas con quien te diseña la web.
             </p>
-          </Reveal>
+          </div>
+        </section>
 
-          {/* Composición tipográfica editorial — sustituye a la foto */}
-          <Reveal delay={0.15}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="aspect-[4/5] bg-primary text-primary-foreground relative overflow-hidden rounded-2xl flex items-center justify-center"
+        {/* Bloque txoko tipográfico */}
+        <section className="mx-auto max-w-7xl px-6 pb-20">
+          <div className="relative aspect-[4/5] md:aspect-[16/9] rounded-3xl overflow-hidden bg-[color:var(--granate-500)] flex items-center justify-center">
+            <div className="absolute top-6 left-6 text-xs uppercase tracking-[0.3em] text-[color:var(--cream-100)]/40">
+              N.º 01 / TXOKO
+            </div>
+            <div className="absolute top-6 right-6 text-xs uppercase tracking-[0.3em] text-[color:var(--cream-100)]/40">
+              2026
+            </div>
+            <p
+              className="font-display italic text-[color:var(--coral-500)] leading-none"
+              style={{ fontSize: "clamp(5rem, 18vw, 16rem)" }}
             >
-              <span className="absolute top-5 left-5 text-xs tracking-widest text-primary-foreground/40">
-                N.º 01 / TXOKO
-              </span>
-              <span className="absolute top-5 right-5 text-xs tracking-widest text-primary-foreground/40">
-                2026
-              </span>
-              <span className="font-display italic text-[clamp(5rem,18vw,12rem)] leading-none text-accent select-none">
-                txoko
-              </span>
-              <span className="absolute bottom-5 left-5 right-5 flex items-center justify-between text-xs text-primary-foreground/40">
-                <span>rincón · euskera</span>
-                <span className="w-12 h-px bg-primary-foreground/30" />
-                <span>pamplona</span>
-              </span>
-            </motion.div>
-          </Reveal>
-        </div>
-      </section>
+              txoko
+            </p>
+            <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-xs uppercase tracking-[0.3em] text-[color:var(--cream-100)]/60">
+              <span>rincón · euskera</span>
+              <div className="flex-1 mx-6 h-px bg-[color:var(--cream-100)]/30" />
+              <span>pamplona</span>
+            </div>
+          </div>
+        </section>
 
-      {/* CUERPO */}
-      <section className="mx-auto max-w-3xl px-6 lg:px-10 py-20 space-y-8 font-display">
-        {[
-          "Mitxoko nace de una observación sencilla. La mayoría de pequeños comercios de Pamplona no tienen web. O tienen una hecha hace diez años que ya no funciona en el móvil. Y cuando piden presupuesto a una agencia, les dicen 1.500€ o 2.000€. Es lógico que digan que no.",
-          "Tu negocio merece algo mejor que eso. Mereces una web que represente lo que haces, que se vea bien en el móvil de tus clientes, y que no te cueste el sueldo de un mes. Mereces que te respondan al WhatsApp cuando preguntes algo. Mereces hablar siempre con la misma persona, no con un comercial distinto cada vez.",
-          "Mitxoko es eso. Una persona haciendo webs para comercios de Pamplona. Sin intermediarios, sin contratos largos, sin sorpresas. 300€, dos semanas, y tu negocio en internet.",
-          "Si tu txoko es una peluquería de barrio, un fisio, una cafetería de especialidad o un restaurante familiar, da igual. Lo importante no es el nuestro, es el tuyo. Cuéntanos qué hace especial a tu negocio y construimos su rincón digital.",
-        ].map((p, i) => (
-          <Reveal key={i} delay={i * 0.05}>
-            <p className="text-2xl md:text-3xl leading-[1.35] font-normal">{p}</p>
-          </Reveal>
-        ))}
+        {/* Cuerpo */}
+        <section className="mx-auto max-w-3xl px-6 py-20 space-y-12">
+          {[
+            "Mitxoko nace de una observación sencilla. La mayoría de pequeños comercios de Pamplona no tienen web. O tienen una hecha hace diez años que ya no funciona en el móvil. Y cuando piden presupuesto a una agencia, les dicen 1.500 € o 2.000 €. Es lógico que digan que no.",
+            "Tu negocio merece algo mejor que eso. Mereces una web que represente lo que haces, que se vea bien en el móvil de tus clientes, y que no te cueste el sueldo de un mes. Mereces que te respondan al WhatsApp cuando preguntes algo. Mereces hablar siempre con la misma persona, no con un comercial distinto cada vez.",
+            "Mitxoko es eso. Una persona haciendo webs para comercios de Pamplona. Sin intermediarios, sin contratos largos, sin sorpresas. 300 €, dos semanas, y tu negocio en internet.",
+            "Si tu txoko es una peluquería de barrio, un fisio, una cafetería de especialidad o un restaurante familiar, da igual. Lo importante no es el nuestro, es el tuyo. Cuéntanos qué hace especial a tu negocio y construimos su rincón digital.",
+          ].map((p, i) => (
+            <p key={i} className="font-display text-2xl md:text-3xl leading-snug text-[color:var(--ink-900)]">
+              {p}
+            </p>
+          ))}
 
-        <Reveal delay={0.2}>
-          <div className="pt-6">
+          <div className="pt-8">
             <Link
               to="/contacto"
-              className="group inline-flex items-center gap-2 bg-foreground text-background px-7 py-3.5 rounded-full hover:bg-primary transition-colors font-sans text-sm"
+              className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--ink-900)] px-7 py-3.5 text-sm font-medium text-[color:var(--cream-100)] hover:bg-[color:var(--granate-700)] transition-colors"
             >
               Cuéntame de tu txoko
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
           </div>
-        </Reveal>
-      </section>
+        </section>
 
-      {/* MANIFIESTO */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-20">
-        <Reveal>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-12">
-            Manifiesto
-          </p>
-        </Reveal>
-        <div className="grid md:grid-cols-3 gap-10">
-          {[
-            ["01", "Una persona, no una agencia.", "Hablas siempre conmigo. Sin pasar por cuatro departamentos."],
-            ["02", "Sin sorpresas.", "Lo que entra, lo que no entra, y el precio. Todo claro desde el primer día."],
-            ["03", "De aquí.", "mitxoko es de Pamplona. Conozco la zona, entiendo a los comercios de aquí."],
-          ].map(([n, title, body], i) => (
-            <Reveal key={n} delay={i * 0.08}>
-              <div className="border-t border-border pt-8">
-                <span className="font-display italic text-5xl text-primary/60">{n} ·</span>
-                <h3 className="mt-6 font-display text-2xl">{title}</h3>
-                <p className="mt-3 text-muted-foreground leading-relaxed">{body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
+        {/* Manifiesto */}
+        <section className="bg-[color:var(--granate-700)] text-[color:var(--cream-100)] diagonal-lines">
+          <div className="mx-auto max-w-7xl px-6 py-32">
+            <h2 className="font-display text-4xl md:text-6xl mb-16 max-w-3xl">
+              Cómo entiendo este trabajo
+            </h2>
+            <div className="grid md:grid-cols-3 gap-12">
+              {[
+                { n: "01", t: "Una persona, no una agencia.", d: "Hablas siempre conmigo. Sin pasar por cuatro departamentos." },
+                { n: "02", t: "Sin sorpresas.", d: "Lo que entra, lo que no entra, y el precio. Todo claro desde el primer día." },
+                { n: "03", t: "De aquí.", d: "Mitxoko es de Pamplona. Conozco la zona, entiendo a los comercios de aquí." },
+              ].map((it) => (
+                <div key={it.n}>
+                  <p className="font-display italic text-6xl text-[color:var(--coral-500)]">
+                    {it.n} ·
+                  </p>
+                  <h3 className="mt-4 font-display text-2xl">{it.t}</h3>
+                  <p className="mt-3 text-[color:var(--cream-100)]/75 leading-relaxed">{it.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      <FinalCta />
-    </SiteLayout>
+        <CTA />
+        <Footer />
+      </div>
+    </PageTransition>
   );
 }
