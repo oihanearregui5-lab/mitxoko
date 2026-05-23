@@ -17,6 +17,7 @@ import { Footer } from "@/components/site/Footer";
 import { Marquee } from "@/components/site/Marquee";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
 import { Counter } from "@/components/site/Counter";
+import { RotatingWord } from "@/components/site/RotatingWord";
 
 /* ---------------- HERO ---------------- */
 function Hero() {
@@ -128,12 +129,16 @@ const SECTORS = [
 ];
 
 function Sectors() {
+  // Extraer verbos de los sectores para la palabra rotativa
+  const verbs = SECTORS.map((s) => s.verb.toLowerCase());
+
   return (
     <section className="paper-grain bg-paper py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
-          <h2 className="font-serif text-5xl md:text-7xl text-ink max-w-[18ch] leading-[1.02]">
-            <em className="italic text-terracotta">Hago webs para</em> gente que
+          <h2 className="font-serif text-5xl md:text-7xl text-ink max-w-[22ch] leading-[1.02]">
+            <em className="italic text-terracotta">Hago webs para</em> gente que{" "}
+            <RotatingWord words={verbs} />
           </h2>
         </Reveal>
 
@@ -229,6 +234,31 @@ function Manifesto() {
             </Reveal>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- PULL QUOTE ---------------- */
+function PullQuote() {
+  return (
+    <section className="paper-grain bg-sand py-28 md:py-36">
+      <div className="mx-auto max-w-[1100px] px-6 md:px-10 text-center">
+        <Reveal>
+          <p className="font-serif italic text-3xl md:text-5xl leading-[1.2] text-ink">
+            «No vendo webs. Te ayudo a poner tu negocio en internet sin que
+            parezca que has gastado <em className="text-terracotta">poco</em>.»
+          </p>
+        </Reveal>
+
+        <Reveal delay={1}>
+          <div className="mt-12 flex flex-col items-center gap-3">
+            <div className="h-px w-16 bg-terracotta" />
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/60">
+              mitxoko · pamplona
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -616,6 +646,7 @@ export function HomePage() {
         <Marquee text="MITXOKO · TU RINCÓN EN INTERNET · DESDE PAMPLONA" />
         <Sectors />
         <Manifesto />
+        <PullQuote />
         <Process />
         <Incluye />
         <Templates />
