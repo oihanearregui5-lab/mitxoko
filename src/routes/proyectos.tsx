@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { PageTransition } from "@/components/PageTransition";
 
@@ -27,7 +28,9 @@ const fade = {
 function Proyectos() {
   return (
     <PageTransition>
-      <div>
+      <div className="min-h-screen">
+        <Nav />
+
         <section className="px-6 lg:px-10 py-24 md:py-32 max-w-7xl mx-auto">
           <motion.p
             {...fade}
