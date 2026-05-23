@@ -272,24 +272,52 @@ function PullQuote() {
 /* ---------------- PROCESS ---------------- */
 function Process() {
   const steps = [
-    { n: "01", title: "Hablamos", desc: "Te cuento, me cuentas. Sin formularios, sin venderte nada.", time: "Día 1" },
-    { n: "02", title: "Diseño", desc: "Maqueto, escribo, ajusto con tu feedback. Vas viendo según avanza.", time: "Días 2 — 10" },
-    { n: "03", title: "Publicamos", desc: "Web en línea, dominio activo, te enseño a usarla. Y listo.", time: "Días 11 — 14" },
+    {
+      n: "01",
+      title: "Hablamos",
+      desc: "Te cuento, me cuentas. Sin formularios, sin venderte nada. Veinte minutos por teléfono o un café si estamos cerca.",
+      time: "Día 1",
+    },
+    {
+      n: "02",
+      title: "Diseño",
+      desc: "Maqueto, escribo los textos contigo, ajusto con tu feedback. Vas viendo cómo avanza, paso a paso.",
+      time: "Días 2 — 10",
+    },
+    {
+      n: "03",
+      title: "Publicamos",
+      desc: "Web en línea, dominio activo, te enseño a usarla en 30 minutos. Un mes de cambios gratis por si algo no encaja.",
+      time: "Días 11 — 14",
+    },
   ];
   return (
-    <section className="paper-grain bg-paper py-24 md:py-32">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+    <section className="paper-grain bg-paper py-24 md:py-32 relative overflow-hidden">
+      {/* sutil glow desde la izquierda */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-40 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full opacity-60"
+        style={{
+          background:
+            "radial-gradient(closest-side, color-mix(in oklab, var(--butter) 35%, transparent), transparent 70%)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
-          <h2 className="font-serif text-5xl md:text-7xl text-ink">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-stone">
+            [ Proceso ]
+          </p>
+          <h2 className="mt-3 font-serif text-5xl md:text-7xl text-ink">
             <em className="italic text-terracotta">Cómo trabajo</em>, paso a paso.
           </h2>
         </Reveal>
 
-        <div className="relative mt-20">
-          {/* dotted progress line */}
+        {/* línea punteada decorativa */}
+        <div className="relative mt-24">
           <svg
             aria-hidden
-            className="absolute left-0 right-0 top-[60px] hidden md:block"
+            className="absolute left-0 right-0 top-[90px] hidden md:block"
             height="2"
             preserveAspectRatio="none"
             viewBox="0 0 1000 2"
@@ -306,19 +334,52 @@ function Process() {
             />
           </svg>
 
-          <Stagger className="grid gap-12 md:grid-cols-3 md:gap-10">
-            {steps.map((s) => (
+          <Stagger className="grid gap-6 md:grid-cols-3 md:gap-6">
+            {steps.map((s, i) => (
               <StaggerItem key={s.n}>
-                <div className="font-mono text-[80px] md:text-[110px] leading-none text-terracotta font-medium">
-                  {s.n}
-                </div>
-                <h3 className="mt-6 font-serif text-3xl text-ink">{s.title}</h3>
-                <p className="mt-3 max-w-[28ch] text-[15px] text-ink/70 leading-relaxed">
-                  {s.desc}
-                </p>
-                <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-stone">
-                  {s.time}
-                </p>
+                <article className="group relative h-full overflow-hidden rounded-lg border border-ink/10 bg-paper p-8 md:p-10 transition-all hover:border-terracotta/30 hover:shadow-[0_30px_70px_-40px_rgba(26,26,26,0.4)]">
+                  {/* Número gigante de fondo, desbordando arriba */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -top-6 -right-2 select-none font-serif italic font-light text-terracotta/12 transition-all duration-500 group-hover:text-terracotta/20"
+                    style={{
+                      fontSize: "clamp(180px, 22vw, 280px)",
+                      lineHeight: 0.85,
+                    }}
+                  >
+                    {s.n}
+                  </div>
+
+                  {/* Número visible (más pequeño, mono, en línea con la línea punteada) */}
+                  <div className="relative font-mono text-[15px] tracking-[0.22em] uppercase text-terracotta">
+                    {s.n} —
+                  </div>
+
+                  {/* Título */}
+                  <h3 className="relative mt-12 font-serif text-4xl md:text-5xl text-ink leading-[1.05]">
+                    {s.title}
+                  </h3>
+
+                  {/* Descripción */}
+                  <p className="relative mt-5 max-w-[32ch] text-[15px] leading-[1.6] text-ink/72">
+                    {s.desc}
+                  </p>
+
+                  {/* Pie con tiempo + separador editorial */}
+                  <div className="relative mt-10 flex items-center gap-3 border-t border-ink/10 pt-5">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-stone">
+                      {s.time}
+                    </span>
+                    {i < steps.length - 1 && (
+                      <span
+                        aria-hidden
+                        className="ml-auto font-mono text-[10px] text-terracotta/50 hidden md:inline"
+                      >
+                        siguiente →
+                      </span>
+                    )}
+                  </div>
+                </article>
               </StaggerItem>
             ))}
           </Stagger>
