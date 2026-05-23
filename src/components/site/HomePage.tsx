@@ -419,28 +419,72 @@ function Templates() {
   );
 }
 
-/* ---------------- TESTIMONIALS (empty honest) ---------------- */
-function Testimonials() {
+/* ---------------- TRABAJO (proyectos reales) ---------------- */
+function Trabajo() {
   return (
     <section className="paper-grain bg-sand/50 py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-stone">
-            [ Lo que dicen ]
+            [ El trabajo ]
           </p>
           <h2 className="mt-3 font-serif text-4xl md:text-6xl text-ink max-w-[28ch] leading-[1.05]">
-            Aún no tengo clientes.{" "}
-            <em className="italic text-terracotta">Esto se irá llenando.</em>
+            Lo que <em className="italic text-terracotta">ya está</em> en
+            internet.
           </h2>
         </Reveal>
 
         <Stagger className="mt-14 grid gap-5 md:grid-cols-3">
-          {["01", "02", "03"].map((n) => (
+          {/* Proyecto 01 — GV Foto (real) */}
+          <StaggerItem>
+            <a
+              href="https://gvfoto.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block aspect-[4/3] rounded-lg overflow-hidden relative bg-ink border border-ink/15 transition-shadow hover:shadow-[0_24px_60px_-30px_rgba(26,26,26,0.5)]"
+            >
+              {/* Preview iframe del proyecto */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <iframe
+                  src="https://gvfoto.com"
+                  title="GV Foto — Portfolio fotográfico"
+                  className="w-[200%] h-[200%] origin-top-left scale-50 border-0"
+                  loading="lazy"
+                />
+              </div>
+              {/* Overlay degradado */}
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
+              {/* Contenido */}
+              <div className="absolute inset-0 p-6 flex flex-col justify-between text-paper">
+                <div className="flex items-start justify-between">
+                  <span className="font-mono text-5xl text-paper/80">01</span>
+                  <ArrowUpRight
+                    className="h-5 w-5 opacity-70 transition-all group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    aria-hidden
+                  />
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] opacity-70">
+                    Portfolio fotográfico
+                  </p>
+                  <h3 className="mt-2 font-serif text-3xl leading-tight">
+                    GV Foto
+                  </h3>
+                  <p className="mt-1 font-mono text-[11px] opacity-60">
+                    gvfoto.com
+                  </p>
+                </div>
+              </div>
+            </a>
+          </StaggerItem>
+
+          {/* Proyectos 02 y 03 — Próximamente */}
+          {["02", "03"].map((n) => (
             <StaggerItem key={n}>
               <div className="aspect-[4/3] rounded-lg border border-dashed border-ink/25 p-6 flex flex-col">
                 <span className="font-mono text-5xl text-ink/25">{n}</span>
                 <p className="mt-auto font-mono text-[10px] uppercase tracking-[0.18em] text-ink/40">
-                  Tu testimonio aquí, pronto
+                  Próximamente
                 </p>
               </div>
             </StaggerItem>
@@ -575,7 +619,7 @@ export function HomePage() {
         <Process />
         <Incluye />
         <Templates />
-        <Testimonials />
+        <Trabajo />
         <FAQ />
         <BigCTA />
       </main>
