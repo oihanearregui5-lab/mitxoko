@@ -18,6 +18,7 @@ import { Marquee } from "@/components/site/Marquee";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
 import { Counter } from "@/components/site/Counter";
 import { RotatingWord } from "@/components/site/RotatingWord";
+import { HollowWord } from "@/components/site/HollowWord";
 
 /* ---------------- HERO ---------------- */
 function Hero() {
@@ -197,9 +198,8 @@ const MANIFESTO = [
     n: "02",
     text: (
       <>
-        No vendo plantillas. Vendo{" "}
-        <strong className="font-semibold">tiempo</strong>. El mío, dedicado al
-        tuyo.
+        No vendo plantillas <em className="italic">bonitas</em>. Vendo webs que{" "}
+        <strong className="font-semibold">dicen algo</strong>.
       </>
     ),
   },
@@ -217,8 +217,13 @@ const MANIFESTO = [
 
 function Manifesto() {
   return (
-    <section className="paper-grain bg-night text-paper py-28 md:py-36 relative">
-      <div className="mx-auto max-w-[1200px] px-6 md:px-10">
+    <section className="paper-grain bg-night text-paper py-28 md:py-36 relative overflow-hidden">
+      <HollowWord
+        word="manifiesto"
+        variant="butter"
+        className="-right-32 top-1/2 -translate-y-1/2 md:-right-40"
+      />
+      <div className="relative z-10 mx-auto max-w-[1200px] px-6 md:px-10">
         <Reveal>
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-butter">
             [ Manifiesto · 2026 ]
@@ -301,6 +306,11 @@ function Process() {
           background:
             "radial-gradient(closest-side, color-mix(in oklab, var(--butter) 35%, transparent), transparent 70%)",
         }}
+      />
+      <HollowWord
+        word="proceso"
+        className="-left-16 top-4 md:-left-24 md:top-8"
+        rotate={-4}
       />
 
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
@@ -400,8 +410,13 @@ const INCLUYE = [
 ];
 
 function Incluye() {
+  const [index, setIndex] = useState(0);
+  const total = INCLUYE.length;
+  const go = (delta: number) =>
+    setIndex((i) => (i + delta + total) % total);
+
   return (
-    <section className="paper-grain bg-paper py-24 md:py-32 border-t border-ink/10">
+    <section className="paper-grain bg-paper py-24 md:py-32 border-t border-ink/10 relative overflow-hidden">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-stone">
@@ -412,28 +427,111 @@ function Incluye() {
             extras escondidos.
           </h2>
           <p className="mt-6 max-w-[58ch] text-[16px] text-ink/70 leading-relaxed">
-            Esto es lo que tienes el día que tu web está publicada. Sin
-            asteriscos, sin extras a la hora de pagar.
+            El precio cerrado de mitxoko incluye seis cosas, ni una menos. Sin
+            letra pequeña, sin paquetes premium, sin upgrades a mitad del
+            camino.
           </p>
         </Reveal>
 
-        <Stagger className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {INCLUYE.map((item) => (
-            <StaggerItem key={item.n}>
-              <div className="group h-full rounded-lg bg-sand/60 p-7 border border-ink/8 transition-shadow hover:shadow-[0_24px_60px_-30px_rgba(26,26,26,0.35)]">
-                <div className="font-mono text-[40px] leading-none text-terracotta font-medium">
-                  {item.n}
-                </div>
-                <h3 className="mt-6 font-serif text-2xl text-ink leading-tight">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-[14px] text-ink/70 leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            </StaggerItem>
+        {/* Carrusel */}
+        <div className="relative mt-16 h-[560px] md:h-[600px]">
+          {/* Glow detrás de la card central */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70"
+            style={{
+              background:
+                "radial-gradient(closest-side, color-mix(in oklab, var(--butter) 38%, transparent), transparent 70%)",
+            }}
+          />
+
+          {/* Tarjetas */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {INCLUYE.map((item, i) => {
+              let offset = i - index;
+              if (offset > total / 2) offset -= total;
+              if (offset < -total / 2) offset += total;
+
+              const isCenter = offset === 0;
+              const isVisible = Math.abs(offset) <= 1;
+
+              return (
+                <motion.article
+                  key={item.n}
+                  className="absolute flex h-[500px] w-[300px] flex-col rounded-lg border border-ink/10 bg-sand/80 p-7 md:h-[540px] md:w-[360px] md:p-8"
+                  initial={false}
+                  animate={{
+                    x: offset * 280,
+                    scale: isCenter ? 1 : 0.85,
+                    rotate: isCenter ? 0 : offset * 6,
+                    opacity: isVisible ? 1 : 0,
+                    zIndex: isCenter ? 30 : 10,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 30,
+                  }}
+                  drag={isCenter ? "x" : false}
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x < -80) go(1);
+                    else if (info.offset.x > 80) go(-1);
+                  }}
+                >
+                  <p className="font-serif italic text-7xl text-terracotta leading-none">
+                    {item.n}
+                  </p>
+                  <div className="mt-3 h-px w-10 bg-terracotta" />
+                  <h3 className="mt-6 font-serif text-2xl text-ink leading-tight">
+                    {item.title}
+                  </h3>
+                  <p className="mt-4 flex-1 text-[14px] text-ink/70 leading-relaxed">
+                    {item.desc}
+                  </p>
+                  <p className="mt-auto font-mono text-[10px] uppercase tracking-[0.22em] text-moss">
+                    [ Incluido ]
+                  </p>
+                </motion.article>
+              );
+            })}
+          </div>
+
+          {/* Flechas (desktop) */}
+          <button
+            onClick={() => go(-1)}
+            aria-label="Anterior"
+            className="absolute left-0 top-1/2 z-40 hidden h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-moss text-paper transition-transform hover:scale-105 md:flex"
+          >
+            <span className="font-mono text-xl">←</span>
+          </button>
+          <button
+            onClick={() => go(1)}
+            aria-label="Siguiente"
+            className="absolute right-0 top-1/2 z-40 hidden h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-moss text-paper transition-transform hover:scale-105 md:flex"
+          >
+            <span className="font-mono text-xl">→</span>
+          </button>
+        </div>
+
+        {/* Indicadores */}
+        <div className="mt-8 flex justify-center gap-4">
+          {INCLUYE.map((item, i) => (
+            <button
+              key={item.n}
+              onClick={() => setIndex(i)}
+              aria-label={`Ir a tarjeta ${i + 1}`}
+              className={`font-mono text-xs transition-colors ${
+                i === index
+                  ? "text-terracotta"
+                  : "text-stone/50 hover:text-stone"
+              }`}
+            >
+              {item.n}
+            </button>
           ))}
-        </Stagger>
+        </div>
       </div>
     </section>
   );
@@ -518,8 +616,13 @@ function Templates() {
 /* ---------------- TRABAJO (proyectos reales) ---------------- */
 function Trabajo() {
   return (
-    <section className="paper-grain bg-sand/50 py-24 md:py-32">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+    <section className="paper-grain bg-sand/50 py-24 md:py-32 relative overflow-hidden">
+      <HollowWord
+        word="obra"
+        className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[18rem] md:text-[28rem]"
+        sizeClass=""
+      />
+      <div className="relative z-10 mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-stone">
             [ El trabajo ]
@@ -622,7 +725,7 @@ const FAQS = [
 function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="paper-grain bg-paper py-24 md:py-32">
+    <section className="paper-grain bg-paper pt-24 pb-32 md:pt-32 md:pb-44">
       <div className="mx-auto max-w-[1100px] px-6 md:px-10">
         <Reveal>
           <h2 className="font-serif text-5xl md:text-7xl text-ink">
@@ -675,6 +778,15 @@ function FAQ() {
 function BigCTA() {
   return (
     <section className="paper-grain bg-butter py-28 md:py-40 relative">
+      {/* Botón flotante a caballo entre FAQ y CTA */}
+      <Link
+        to="/contacto"
+        className="absolute left-1/2 top-0 z-30 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-4 rounded-full bg-ink px-10 py-5 text-base text-paper transition-all hover:bg-ink/85 hover:-translate-y-[calc(50%+2px)] md:px-12 md:py-6 md:text-lg"
+      >
+        <span className="font-serif italic">Empieza tu web</span>
+        <span className="font-mono" aria-hidden>→</span>
+      </Link>
+
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 text-center">
         <Reveal>
           <h2 className="font-serif text-[12vw] leading-[0.95] md:text-[7rem] text-ink">
