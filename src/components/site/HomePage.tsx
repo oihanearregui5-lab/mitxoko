@@ -43,19 +43,17 @@ function Hero() {
 
           <Reveal delay={1}>
             <h1 className="mt-8 font-serif text-[14vw] leading-[0.95] tracking-[-0.02em] text-ink md:text-[7.2rem] lg:text-[8.6rem]">
-              Webs para{" "}
-              <em className="text-terracotta font-serif italic">comercios</em>{" "}
-              que{" "}
-              <em className="text-terracotta font-serif italic">trabajan</em>{" "}
-              con sus{" "}
-              <em className="text-terracotta font-serif italic">manos</em>.
+              Tu negocio merece estar{" "}
+              <em className="text-terracotta font-serif italic">bien</em> en
+              internet.
             </h1>
           </Reveal>
 
           <Reveal delay={2}>
             <p className="mt-10 max-w-[52ch] text-[17px] leading-[1.55] text-ink/75">
-              Una persona, dos semanas, trescientos euros. Sin cuotas. Sin
-              agencias. Sin chatbots respondiéndote a las once.
+              Diseño la web de tu comercio en dos semanas. Trescientos euros,
+              precio cerrado, sin cuotas ni sorpresas. Hablas conmigo, no con
+              un comercial.
             </p>
           </Reveal>
 
@@ -88,7 +86,14 @@ function Hero() {
               to={300}
               className="text-[120px] md:text-[160px] tracking-tight text-ink font-medium"
             />
-            <span className="mt-4 text-4xl md:text-5xl text-terracotta">€</span>
+            <div className="mt-4 ml-1 flex flex-col gap-2">
+              <span className="text-4xl md:text-5xl text-terracotta leading-none">
+                €
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone whitespace-nowrap">
+                IVA incl.
+              </span>
+            </div>
           </div>
           <p className="-mt-1 max-w-[22ch] text-[15px] text-ink/70 leading-snug">
             Precio cerrado. Nunca más.
