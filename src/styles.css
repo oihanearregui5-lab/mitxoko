@@ -2,11 +2,17 @@
 @source "../src";
 @import "tw-animate-css";
 
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap");
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* NEW v3 fonts */
+  --font-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* LEGACY alias — para que el resto de páginas no se rompa */
   --font-display: "Fraunces", ui-serif, Georgia, serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -17,6 +23,28 @@
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* NEW v3 palette */
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-moss: var(--moss);
+  --color-terracotta: var(--terracotta);
+  --color-butter: var(--butter);
+  --color-night: var(--night);
+  --color-sand: var(--sand);
+  --color-stone: var(--stone);
+
+  /* LEGACY alias — mantener para no romper páginas viejas mientras las migramos */
+  --color-cream-100: var(--cream-100);
+  --color-cream-200: var(--cream-200);
+  --color-cream-300: var(--cream-300);
+  --color-granate-500: var(--granate-500);
+  --color-granate-700: var(--granate-700);
+  --color-granate-900: var(--granate-900);
+  --color-coral-500: var(--coral-500);
+  --color-forest-900: var(--forest-900);
+  --color-ink-900: var(--ink-900);
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -34,60 +62,68 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-
-  --color-cream-100: var(--cream-100);
-  --color-cream-200: var(--cream-200);
-  --color-cream-300: var(--cream-300);
-  --color-granate-500: var(--granate-500);
-  --color-granate-700: var(--granate-700);
-  --color-granate-900: var(--granate-900);
-  --color-coral-500: var(--coral-500);
-  --color-forest-900: var(--forest-900);
-  --color-ink-900: var(--ink-900);
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
-  /* mitxoko extended palette */
-  --cream-100: oklch(0.965 0.018 75);
-  --cream-200: oklch(0.935 0.025 75);
-  --cream-300: oklch(0.895 0.035 72);
-  --granate-500: oklch(0.36 0.13 22);
-  --granate-700: oklch(0.30 0.14 22);
-  --granate-900: oklch(0.22 0.12 22);
-  --coral-500: oklch(0.63 0.12 32);
-  --forest-900: oklch(0.27 0.035 155);
-  --ink-900: oklch(0.18 0.008 60);
+  /* NEW v3 palette */
+  --paper: oklch(0.948 0.012 85);       /* #F4F1EB warm off-white */
+  --ink: oklch(0.205 0.005 0);          /* #1A1A1A ink black */
+  --moss: oklch(0.42 0.055 145);        /* #3D5A3A deep moss green */
+  --terracotta: oklch(0.585 0.135 45);  /* #C4633A burnt terracotta */
+  --butter: oklch(0.88 0.105 95);       /* #F1D77A butter yellow */
+  --night: oklch(0.28 0.035 250);       /* #1F2D3D night ink blue */
+  --sand: oklch(0.875 0.018 85);        /* #E0D9C8 medium beige */
+  --stone: oklch(0.535 0.018 85);       /* #7A7466 stone grey */
 
-  /* Shadcn semantic tokens mapped to mitxoko palette */
-  --background: var(--cream-100);
-  --foreground: var(--ink-900);
-  --card: var(--cream-200);
-  --card-foreground: var(--ink-900);
-  --popover: var(--cream-100);
-  --popover-foreground: var(--ink-900);
-  --primary: var(--ink-900);
-  --primary-foreground: var(--cream-100);
-  --secondary: var(--cream-200);
-  --secondary-foreground: var(--ink-900);
-  --muted: var(--cream-200);
-  --muted-foreground: oklch(0.45 0.02 60);
-  --accent: var(--granate-500);
-  --accent-foreground: var(--cream-100);
-  --destructive: oklch(0.55 0.22 25);
-  --destructive-foreground: var(--cream-100);
-  --border: oklch(0.36 0.13 22 / 0.15);
-  --input: oklch(0.36 0.13 22 / 0.2);
-  --ring: var(--granate-500);
+  /* LEGACY palette — aliases hacia v3 para que el resto de páginas
+     mantenga coherencia visual mientras las migramos sección por sección */
+  --cream-100: var(--paper);
+  --cream-200: var(--sand);
+  --cream-300: oklch(0.815 0.022 85);
+  --granate-500: var(--terracotta);
+  --granate-700: oklch(0.50 0.135 45);
+  --granate-900: oklch(0.38 0.13 45);
+  --coral-500: var(--terracotta);
+  --forest-900: var(--moss);
+  --ink-900: var(--ink);
+
+  /* Shadcn semantic tokens */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--moss);
+  --primary-foreground: var(--paper);
+  --secondary: var(--sand);
+  --secondary-foreground: var(--ink);
+  --muted: var(--sand);
+  --muted-foreground: var(--stone);
+  --accent: var(--terracotta);
+  --accent-foreground: var(--paper);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: var(--paper);
+  --border: color-mix(in oklab, var(--ink) 12%, transparent);
+  --input: color-mix(in oklab, var(--ink) 15%, transparent);
+  --ring: var(--moss);
+}
+
+.dark {
+  --background: var(--night);
+  --foreground: var(--paper);
+  --card: var(--night);
+  --card-foreground: var(--paper);
+  --border: color-mix(in oklab, var(--paper) 15%, transparent);
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
+  * { border-color: var(--color-border); }
 
   html {
+    -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
   }
 
@@ -96,80 +132,98 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
-    -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4, h5 {
-    font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.01em;
   }
 
-  p {
-    line-height: 1.6;
-  }
+  p { line-height: 1.6; }
 
   ::selection {
-    background: var(--granate-500);
-    color: var(--cream-100);
+    background: var(--terracotta);
+    color: var(--paper);
   }
 }
 
-/* Paper grain texture — applied to body */
-body {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-}
+@layer utilities {
+  .font-serif { font-family: var(--font-serif); }
+  .font-sans { font-family: var(--font-sans); }
+  .font-mono { font-family: var(--font-mono); }
+  /* Alias legacy */
+  .font-display { font-family: var(--font-display); }
 
-/* Sutil radial gradients reutilizables */
-.hero-glow {
-  background:
-    radial-gradient(ellipse at top right, oklch(0.36 0.13 22 / 0.08), transparent 60%),
-    radial-gradient(ellipse at bottom left, oklch(0.63 0.12 32 / 0.06), transparent 50%);
-}
+  /* Paper grain texture — para fondos paper */
+  .paper-grain {
+    position: relative;
+  }
+  .paper-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
 
-.section-glow-light {
-  background: radial-gradient(circle at 30% 50%, oklch(0.36 0.13 22 / 0.04), transparent 60%);
-}
+  /* Marquee animation v3 */
+  .marquee-track {
+    animation: marquee 30s linear infinite;
+    will-change: transform;
+  }
+  .marquee-group:hover .marquee-track,
+  .marquee-wrap:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  /* Legacy mask para marquees viejos */
+  .marquee-mask {
+    mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  }
 
-/* Diagonal lines decorativas */
-.diagonal-lines {
-  background-image: repeating-linear-gradient(
-    45deg,
-    oklch(0.36 0.13 22 / 0.06),
-    oklch(0.36 0.13 22 / 0.06) 1px,
-    transparent 1px,
-    transparent 60px
-  );
-}
+  /* Draw line animation (proceso) */
+  .draw-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 1.6s ease-out forwards;
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
 
-/* Marquee */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-33.333%); }
-}
-.marquee-track {
-  animation: marquee 40s linear infinite;
-  will-change: transform;
-}
-.marquee-wrap:hover .marquee-track {
-  animation-play-state: paused;
-}
-.marquee-mask {
-  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
-}
-
-/* Scroll indicator pulse */
-@keyframes scroll-pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
-}
-.scroll-pulse { animation: scroll-pulse 2s ease-in-out infinite; }
-
-/* Vertical text */
-.text-vertical {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  /* LEGACY utilities — usadas por páginas no migradas todavía */
+  .hero-glow {
+    background:
+      radial-gradient(ellipse at top right, oklch(0.585 0.135 45 / 0.08), transparent 60%),
+      radial-gradient(ellipse at bottom left, oklch(0.88 0.105 95 / 0.08), transparent 50%);
+  }
+  .section-glow-light {
+    background: radial-gradient(circle at 30% 50%, oklch(0.585 0.135 45 / 0.04), transparent 60%);
+  }
+  .diagonal-lines {
+    background-image: repeating-linear-gradient(
+      45deg,
+      oklch(0.585 0.135 45 / 0.06),
+      oklch(0.585 0.135 45 / 0.06) 1px,
+      transparent 1px,
+      transparent 60px
+    );
+  }
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  .scroll-pulse { animation: scroll-pulse 2s ease-in-out infinite; }
+  .text-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
 }
 
 /* Reduced motion */
