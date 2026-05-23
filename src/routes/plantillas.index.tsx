@@ -6,7 +6,7 @@ import { PlantillaCard } from "@/components/PlantillaCard";
 import { PLANTILLAS } from "@/lib/plantillas";
 import { PageTransition } from "@/components/PageTransition";
 
-export const Route = createFileRoute("/plantillas")({
+export const Route = createFileRoute("/plantillas/")({
   component: Plantillas,
   head: () => ({
     meta: [
