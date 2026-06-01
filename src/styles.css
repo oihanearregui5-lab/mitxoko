@@ -172,7 +172,7 @@
 
   /* Marquee animation v3 */
   .marquee-track {
-    animation: marquee 30s linear infinite;
+    animation: marquee 90s linear infinite;
     will-change: transform;
   }
   .marquee-group:hover .marquee-track,
